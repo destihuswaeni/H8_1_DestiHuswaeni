@@ -1,0 +1,73 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Sat Jun 18 13:02:01 2022
+
+@author: destihuswaeni
+"""
+
+import numpy as np
+import pandas as pd
+
+df = pd.read_csv('https://raw.githubusercontent.com/ardhiraka/PFDS_sources/master/property_data.csv')
+
+df.head(10)
+
+df['ST_NUM']
+
+df['ST_NUM'].isnull()
+df['ST_NUM'].isna()
+
+##mencari semua kolom yang n/a
+df.isna()
+
+
+###Non Standard Missing Value
+df['NUM_BEDROOMS']
+
+df['NUM_BEDROOMS'].isnull()
+
+missing_values = ["n/a", "na", "--"]
+df = pd.read_csv('https://raw.githubusercontent.com/ardhiraka/PFDS_sources/master/property_data.csv', na_values = missing_values)
+
+df['NUM_BEDROOMS']
+df['NUM_BEDROOMS'].isnull()
+
+###Unexpected Missing Values
+df['OWN_OCCUPIED']
+df['OWN_OCCUPIED'].isnull()
+
+cnt=0
+for row in df['OWN_OCCUPIED']:
+    try:
+        int(row)
+        df.loc[cnt, 'OWN_OCCUPIED']=np.nan
+    except ValueError:
+        pass
+    cnt+=1
+    
+df.head(9)
+
+###Summarizing Missing Values
+df.isnull().sum()
+df.isnull().values.any()
+df.isnull().sum().sum()
+
+###Replacing Missing Value
+df.ST_NUM.fillna(125, inplace=True)
+df['ST_NUM']
+median = df['NUM_BEDROOMS'].median()
+df['NUM_BEDROOMS'].fillna(median, inplace=True)
+df.head(9)
+
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
