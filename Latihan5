@@ -1,0 +1,102 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Sat Jun 18 09:36:31 2022
+
+@author: destihuswaeni
+"""
+
+import pandas as pd
+
+df = pd.read_csv('https://raw.githubusercontent.com/ardhiraka/PFDS_sources/master/nbaallelo.csv')
+
+
+#jumlah baris
+len(df)
+
+#jumlah baris dan kolom
+df.shape
+
+#menampilkan data
+df.head()
+
+pd.set_option("display.max.columns", None)
+
+#untuk menampilkan sample data (df.head(), tail(), sample())
+df.tail(5)
+
+#Getting to know your data
+### Info mengenai data set secara general
+df.info()
+
+###Overview dengan nilai yg terkandung di setiap kolom
+##statistika deskriptif (mean, median, modus, IQR, percentil 10, 20)
+df.describe()
+
+df.describe().T
+
+df.describe(include = 'object').T
+
+###Exploring Data
+#memeriksa seberapa sering dari team id
+df["team_id"].value_counts()
+
+df["fran_id"].value_counts()
+
+df.loc[df["fran_id"] == "Lakers", "team_id"].value_counts()
+
+df.date_game = df.date_game.astype("datatime64")
+
+df.loc[df["team_id"] == "MNL", "date_game"].min()
+
+df.loc[df["team_id"] == "MNL", "date_game"].max()
+
+df.loc[df["team_id"] == "MNL", "date_game"].agg(("min", "max","median"))
+
+df.loc[df["team_id"] == "BOS", "pts"].sum()
+
+###Series
+revenues = pd.Series([5555, 7000, 1980])
+revenues
+
+revenues.values
+
+revenues.index
+
+city_revenues = pd.Series([4200,8000,6500],
+                          index=['Amsterdam','Toronto','Tokyo'])
+city_revenues
+
+city_employee_count = pd.Series({'Amsterdam': 5,'Tokyo':8})
+city_employee_count
+
+city_employee_count.keys()
+
+"Tokyo" in city_employee_count
+
+"New York" in city_employee_count
+
+###DataFrame
+city_data = pd.DataFrame({
+    "revenue": city_revenues,
+    "employee_count": city_employee_count
+})
+city_data
+
+city_data.index
+
+city_data.values
+
+city_data.axes
+
+city_data.axes[0]
+
+
+
+
+
+
+
+
+
+
